@@ -75,8 +75,10 @@ pokemon_recipe <- recipe(type_1 ~ legendary + generation + sp_atk + attack + spe
 
 ### Exercise 2  
 
+I will be making a correlation matrix with all of the continuous variables (to find how they relate to one another). For `legendary` and `generation`, I will be making a line plot and boxplot, respectively, to analyze the relationships of those two variables with `total` (the total of the six battle statistics). For `type_1`, we already assessed the distribution of this variable in Homework 5. For `type_2`, I will not be creating a plot to analyze the variable because some Pokemon do not have a second type. For `x` and `name`, I will not be making plots as those are both unique to each Pokemon and are mainly used for identification.  
+
 ```{r}
-# Creating correlation of training set
+# Creating correlation matrix of training set (with continuous variables)
 cor_pokemon_train <- pokemon_train %>% 
   # Taking out all discrete/categorical variables
   select(-c('type_1', 'legendary', 'generation', 'x', 'name', 'type_2')) %>% 
@@ -85,9 +87,25 @@ cor_pokemon_train <- pokemon_train %>%
 cor_pokemon_train
 ```
 
-I notice that each of the battle statistics is positively correlated with `total` (all are > 0.5). This makes sense because, as each battle statistic increases, the total would increase as well because the total is the total of the battle statistics (the total is actually perfectly collinear with the sum of all six battle statistics).  
+I notice that each of the battle statistics is positively correlated with `total` (all are > 0.5). This makes sense because, as each battle statistic increases, the total would increase as well because the total is the total of the battle statistics (the total is actually the sum of all six battle statistics).  
 
 Overall, there are no particularly strong relationships and there are also no negative correlations.  
+
+```{r}
+# Creating density plots for relationship between `generation` and `total`
+ggplot(pokemon_train, aes(x = total, color = generation)) +
+  geom_density()
+```
+
+Based on the density plots for each generation, the generations appear to have similar distributions of total statistics. However, generation 5 appears to have two peaks above the rest of the data at total values of around 300 and 500 (meaning more Pokemon with those total values).  
+
+```{r}
+# Creating boxplots for relationship between `legendary` and `total`
+ggplot(pokemon_train, aes(x = legendary, y = total)) +
+  geom_boxplot()
+```
+
+It makes sense that there are many more "False" values for `legendary` because being legendary is a special attribute for a Pokemon. Also, from the boxplots, it appears that if a Pokemon is legendary, it generally has higher total battle statistics than Pokemon that are not legendary.  
 
 ### Exercise 3  
 
@@ -204,11 +222,11 @@ rf_tuned <- read_rds(file = "rf.rds")
 autoplot(rf_tuned)
 ```
 
-In each of the plots, it appears that low values of `mtry` (predictors randomly selected) have lower values of `roc_auc`. The `roc_auc` also appears to generally decrease at `mtry` gets too high. `mtry` values around 2-5 seem to generally yield the best results among the plots.  
+In each of the plots, it appears that low values of `mtry` (predictors randomly selected) have lower values of `roc_auc`. The `roc_auc` also appears to generally decrease at `mtry` gets too high. `mtry` values around 2-5 seem to generally yield the best results among the plots. The `mtry` value definitely appears to have the biggest impact on model performance.  
 
-As for `min_n`, the patterns in the plots appear to be quite similar for every chosen value of minimal node size. Each `min_n` value generally increases as the number of predictors increases and slightly decreases as the number of predictors selected becomes too much.  
+As for `min_n`, the patterns in the plots appear to be quite similar for every chosen value of minimal node size; however, the curved parts of the graphs appear to be (very slightly) higher for lower `min_n` values. Each `min_n` value generally increases as the number of predictors increases and slightly decreases as the number of predictors selected becomes too much.  
 
-Also, higher values of `trees` appear to have slightly better performance. The lowest values of `trees` seem to do worse than the higher values. The best performing value of `trees` appears to be 885.  
+Also, the value of `trees` does not appear to have much of an effect on model performance as the colored lines overlap quite a bit. The best performing value of `trees` appears to be 885.  
 
 ### Exercise 7  
 
