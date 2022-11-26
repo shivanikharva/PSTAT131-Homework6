@@ -160,7 +160,7 @@ decision_tree_best_roc_auc <- decision_tree_tune_res %>%
 decision_tree_best_roc_auc
 ```
 
-The `roc_auc` of the best-performing pruned decision tree on the folds is about 0.6282059	.  
+The `roc_auc` of the best-performing pruned decision tree on the folds is about 0.6282059.    
 
 ### Exercise 5  
 
