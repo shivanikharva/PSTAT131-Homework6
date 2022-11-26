@@ -97,7 +97,7 @@ ggplot(pokemon_train, aes(x = total, color = generation)) +
   geom_density()
 ```
 
-Based on the density plots for each generation, the generations appear to have similar distributions of total statistics. However, generation 5 appears to have two peaks above the rest of the data at total values of around 300 and 500 (meaning more Pokemon with those total values).  
+Based on the density plots for each generation, the generations appear to have similar distributions of total statistics. However, generation 5 appears to have two peaks above the rest of the data at total values of around 300 and 500 (meaning more Pokemon with those total values). It makes sense that the generations appear to have similar dist
 
 ```{r}
 # Creating boxplots for relationship between `legendary` and `total`
@@ -105,7 +105,7 @@ ggplot(pokemon_train, aes(x = legendary, y = total)) +
   geom_boxplot()
 ```
 
-It makes sense that there are many more "False" values for `legendary` because being legendary is a special attribute for a Pokemon. Also, from the boxplots, it appears that if a Pokemon is legendary, it generally has higher total battle statistics than Pokemon that are not legendary.  
+From the boxplots, it appears that if a Pokemon is legendary, it generally has higher total battle statistics than Pokemon that are not legendary. This makes sense because being legendary is rarer among Pokemon.  
 
 ### Exercise 3  
 
@@ -224,7 +224,7 @@ autoplot(rf_tuned)
 
 In each of the plots, it appears that low values of `mtry` (predictors randomly selected) have lower values of `roc_auc`. The `roc_auc` also appears to generally decrease at `mtry` gets too high. `mtry` values around 2-5 seem to generally yield the best results among the plots. The `mtry` value definitely appears to have the biggest impact on model performance.  
 
-As for `min_n`, the patterns in the plots appear to be quite similar for every chosen value of minimal node size; however, the curved parts of the graphs appear to be (very slightly) higher for lower `min_n` values. Each `min_n` value generally increases as the number of predictors increases and slightly decreases as the number of predictors selected becomes too much.  
+As for `min_n`, the patterns in the plots appear to be quite similar for every chosen value of minimal node size; however, the curved parts of the graphs appear to be (very slightly) higher for lower `min_n` values.  
 
 Also, the value of `trees` does not appear to have much of an effect on model performance as the colored lines overlap quite a bit. The best performing value of `trees` appears to be 885.  
 
